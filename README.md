@@ -114,3 +114,38 @@ sudo chmod -R 755 /var/www/html
 Let me know if you're using Nginx instead of Apache, or if you want me to generate the config file content for you.
 
 
+# setup all the permissons correctly
+download and upload the project_permissions.sh file into your server. And after that run the below commands into the terminal :
+
+create a new file as project_permissions.sh and into this write the code below and upload it into the server or download the project_permissions.sh file and upload it into the server :
+
+```sh
+#!/bin/bash
+
+PROJECT_PATH="/var/www/html"  # Change if your path differs
+USER="triodev"                # Replace with your VPS user
+WEBGROUP="www-data"
+
+echo "Fixing Laravel permissions in $PROJECT_PATH..."
+
+sudo chown -R $USER:$WEBGROUP $PROJECT_PATH
+sudo find $PROJECT_PATH -type d -exec chmod 755 {} \;
+sudo find $PROJECT_PATH -type f -exec chmod 644 {} \;
+sudo chmod -R ug+rwx $PROJECT_PATH/storage $PROJECT_PATH/bootstrap/cache
+
+echo "✅ Permissions fixed successfully!"
+
+# chmod +x project_permissions.sh
+# ./project_permissions.sh
+```
+
+After that run these two commands into the terminal of the `vps server`, Here are the commands :
+
+```bash
+
+chmod +x project_permissions.sh
+./project_permissions.sh
+
+```
+
+
